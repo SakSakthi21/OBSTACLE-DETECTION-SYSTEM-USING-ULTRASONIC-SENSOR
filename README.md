@@ -19,7 +19,8 @@ Tinkercad provides a simulation environment where this circuit can be virtually 
 
 
 ## Circuit Diagram:
- 
+<img width="720" height="1280" alt="WhatsApp Image 2026-09-17 at 21 29 16" src="https://github.com/user-attachments/assets/1ddb3e3b-b266-48b7-9a22-784f8d2dc08f" />
+
 ## Procedure: //Modify the procedure based on your circuit
 
 Step 1: Set Up the Tinkercad Environment
@@ -53,14 +54,59 @@ Step 7: Save Your Work
 
 
 ## Code:
+int trigPin = 9;
+int echoPin = 10;
+int ledPin = 13;
+int buzzerPin = 8;
 
+long duration;
+int distance;
+
+void setup()
+{
+    pinMode(trigPin, OUTPUT);
+    pinMode(echoPin, INPUT);
+    pinMode(ledPin, OUTPUT);
+    pinMode(buzzerPin, OUTPUT);
+
+    Serial.begin(9600);
+}
+
+void loop()
+{
+    digitalWrite(trigPin, LOW);
+    delayMicroseconds(2);
+
+    digitalWrite(trigPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(trigPin, LOW);
+
+    duration = pulseIn(echoPin, HIGH);
+
+    distance = duration * 0.034 / 2;
+
+    Serial.print("Distance: ");
+    Serial.print(distance);
+    Serial.println(" cm");
+
+    if (distance < 20)
+    {
+        digitalWrite(ledPin, HIGH);
+        digitalWrite(buzzerPin, HIGH);
+    }
+    else
+    {
+        digitalWrite(ledPin, LOW);
+        digitalWrite(buzzerPin, LOW);
+    }
+
+    delay(200);
+}
 
 ## Output:
  
+<img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/05beee07-030f-40f5-9839-4986e3ed677f" />
+When an obstacle is detected within 20 cm, the LED glows and the buzzer sounds. Otherwise, both remain OFF.
 
 
-## Result
-
-
-Result:
 The simulation successfully measured the distance between the ultrasonic sensor  HC-SR04 and the object. The real-time distance values were accurately displayed on the serial monitor in centimeters.
